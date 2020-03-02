@@ -77,7 +77,7 @@ CREATE PROCEDURE search_film(
     p_title varchar(255)    
     )
 BEGIN		
-    SELECT * FROM filmdata
+    SELECT * FROM filmData
 	WHERE	p_film_id = film_id AND
 			p_title LIKE title;
 END$$
@@ -108,7 +108,7 @@ BEGIN
     SET totalOffset = IFNULL(p_offset, 0);
 
     SELECT *
-    FROM filmdata
+    FROM filmData
     WHERE (IF(p_film_id IS NULL, TRUE, p_film_id = film_id) AND
            IF(p_text IS NULL, TRUE,
                title LIKE CONCAT('%', p_text, '%') OR description LIKE CONCAT('%', p_text, '%')) AND
@@ -158,7 +158,7 @@ CREATE PROCEDURE search_films_count(
     p_rating enum ('G','PG','PG-13','R','NC-17'))
 BEGIN
     SELECT COUNT(film_id) AS film_count
-    FROM filmdata
+    FROM filmData
     WHERE (IF(p_film_id IS NULL, TRUE, p_film_id = film_id) AND
            IF(p_text IS NULL, TRUE,
                title LIKE CONCAT('%', p_text, '%') OR description LIKE CONCAT('%', p_text, '%')) AND
