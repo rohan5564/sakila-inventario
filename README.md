@@ -29,7 +29,7 @@ Otherwise, main.go can be executed to build a temporal file by running
 > go run main.go (+args)
 ```
 
-To test if the router is working correctly, you can and run:
+To test if routing works as it should do, you can run
 
 ```Go
 > go test -v (+args)
