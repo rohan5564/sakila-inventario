@@ -15,4 +15,4 @@ branches:
     only:
         - master
 
-script: go test -v -args -ip= ${AWS_RDS_DEMO} -user= ${MYUSER} -pass= ${MYPASS} -schema= sakila
+script: go test -v -args -ip=${AWS_RDS_DEMO} -user=${MYUSER} -pass=${MYPASS} -schema=sakila
