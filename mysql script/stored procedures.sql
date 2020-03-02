@@ -37,7 +37,7 @@ CREATE OR REPLACE VIEW ProceduresAndViews AS
     WHERE routine_type = 'PROCEDURE' AND routine_schema = 'sakila_crud'
     ORDER BY tipo, nombre;
 
-CREATE OR REPLACE VIEW filmData AS
+CREATE OR REPLACE VIEW film_data AS
     SELECT sf.film_id, sf.title, categories, sf.description, sf.release_year, lang.name AS language, olang.name AS original_language,
     sf.rental_duration, sf.rental_rate, sf.length, sf.replacement_cost, sf.rating, sf.special_features,
     sf.last_update, actors
@@ -56,12 +56,12 @@ CREATE OR REPLACE VIEW filmData AS
         GROUP BY film_category.film_id
     ) categories on sf.film_id = categories.film_id;
 
-CREATE OR REPLACE VIEW categoryData AS
+CREATE OR REPLACE VIEW category_data AS
     SELECT category.category_id, name, film.film_id, title
     FROM sakila.category LEFT JOIN sakila.film_category ON category.category_id = film_category.category_id
     LEFT JOIN sakila.film ON film_category.film_id = film.film_id;
 
-CREATE OR REPLACE VIEW actorData AS
+CREATE OR REPLACE VIEW actor_data AS
     SELECT actor.actor_id, actor.first_name, actor.last_name, film.film_id, title
     FROM sakila.actor LEFT JOIN sakila.film_actor ON actor.actor_id = film_actor.actor_id
     LEFT JOIN sakila.film ON film_actor.film_id = film.film_id;
@@ -77,7 +77,7 @@ CREATE PROCEDURE search_film(
     p_title varchar(255)    
     )
 BEGIN		
-    SELECT * FROM filmData
+    SELECT * FROM film_data
 	WHERE	p_film_id = film_id AND
 			p_title LIKE title;
 END$$
@@ -108,7 +108,7 @@ BEGIN
     SET totalOffset = IFNULL(p_offset, 0);
 
     SELECT *
-    FROM filmData
+    FROM film_data
     WHERE (IF(p_film_id IS NULL, TRUE, p_film_id = film_id) AND
            IF(p_text IS NULL, TRUE,
                title LIKE CONCAT('%', p_text, '%') OR description LIKE CONCAT('%', p_text, '%')) AND
@@ -158,7 +158,7 @@ CREATE PROCEDURE search_films_count(
     p_rating enum ('G','PG','PG-13','R','NC-17'))
 BEGIN
     SELECT COUNT(film_id) AS film_count
-    FROM filmData
+    FROM film_data
     WHERE (IF(p_film_id IS NULL, TRUE, p_film_id = film_id) AND
            IF(p_text IS NULL, TRUE,
                title LIKE CONCAT('%', p_text, '%') OR description LIKE CONCAT('%', p_text, '%')) AND
@@ -179,7 +179,7 @@ DELIMITER $$
 CREATE PROCEDURE search_category(p_category varchar(25))
 BEGIN
     SELECT category_id, name, COUNT(film_id) AS 'film_count'
-    FROM categoryData
+    FROM category_data
 	WHERE	IF(p_category IS NULL, TRUE, p_category LIKE name)
     GROUP BY category_id, name
     ORDER BY name ASC;
@@ -191,7 +191,7 @@ DELIMITER $$
 CREATE PROCEDURE search_actor(p_fname varchar(45), p_lname varchar(45))
 BEGIN
     SELECT actor_id, first_name, last_name, group_concat(title ORDER BY title SEPARATOR ',') titles
-    FROM actorData
+    FROM actor_data
 	WHERE IF(p_fname IS NULL, TRUE, p_fname LIKE first_name) AND
 	      IF(p_lname IS NULL, TRUE, p_lname LIKE last_name)
     GROUP BY actor_id, first_name
