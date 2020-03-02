@@ -8,7 +8,7 @@ import (
 
 // SearchAllFilms Executes a search query to get all films
 func SearchAllFilms(result *sakila.FilmResult) error {
-	query := `SELECT * FROM sakila_crud.filmdata;`
+	query := `SELECT * FROM sakila_crud.film_data;`
 
 	rows, err := sakila.Statement.Query(query)
 
