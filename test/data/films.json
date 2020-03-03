@@ -1,0 +1,39 @@
+[{	
+	"title": "filmtest1",
+	"description": "initial description",	
+	"release year": 2020,
+	"language": "English",
+	"original language": "English",
+	"rental duration": 10,
+	"rental rate": 4.20,
+	"length": 70,
+	"replacement cost": 2.20,
+	"rating": "G",
+	"special features": "Trailers,Deleted Scenes"
+},
+{
+	"title": "filmtest2",
+	"categories": [
+	  "Children",
+	  "Documentary"
+	],
+	"description": "initial description",
+	"year": 2020,
+	"language": "English",
+	"rental duration": 1,
+	"rental rate": 2.49,
+	"length": 68,
+	"replacement cost": 18.99,
+	"rating": "NC-17",
+	"special features": [
+	  "Trailers",
+	  "Commentaries",
+	  "Deleted Scenes"
+	],
+	"actors": [
+	  "HENRY BERRY",
+	  "JULIA MCQUEEN",
+	  "CAMERON STREEP",
+	  "NICK WAHLBERG"
+	]
+  }]

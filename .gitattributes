@@ -1,0 +1,4 @@
+#Ignorar todos los archivos
+* linguist-vendored
+#Excepto los que tengan extension .go
+*.go linguist-vendored=false
