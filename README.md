@@ -10,34 +10,29 @@ a sample REST API for [sakila](https://dev.mysql.com/doc/sakila/en/ "main page")
 
 * MySQL 8.0.18 or higher
 
-* Chi and subpackages, MySQL driver and go-cmp. If you want to get these in the go's package-style, in you need to run in your system command prompt:
+* Chi and subpackages, MySQL driver and go-cmp. If you want to get these in the go's package-style, in you need to run in your system's command prompt:
 ```
 go get -u github.com/go-chi/chi github.com/go-chi/render github.com/go-sql-driver/mysql github.com/google/go-cmp
 ```
 
-### Installation, run and testing
+### Running binaries
 
-If you have set the GOPATH and GOBIN environment variables, you can run an installation by placing the source code in the /src folder and running
+If you have set the GOPATH and GOBIN environment variables, you can do an installation then run the generated file.
 
 ```Go
 > go install
+> %GOPATH%\bin\sakila-inventory.exe -args
 ```
 
-Otherwise, main.go can be executed to build a temporal file by running
+Otherwise, just use the following line to run a temporary build.
 
 ```Go
-> go run main.go (+args)
-```
-
-To test if routing works as it should do, you can run
-
-```Go
-> go test -v (+args)
+> go run main.go -args
 ```
 
 #### Arguments
 
-The default arguments in the main file are used for my own pc settings, so if you're here and by some reason you want to run the code, you need to replace them or by adding them in the command prompt.
+The default arguments in the main file are used for my own pc settings, so if you're here and you want to run the code (¯\_(ツ)_/¯? idk), you need to replace those values by adding them in the command line arguments.
 
 | Argument | Description | type | example(default) |
 | :---: | ------ | ------ | ------ |
@@ -55,11 +50,11 @@ The default arguments in the main file are used for my own pc settings, so if yo
 The access routes for the API are:
 1.  /API/rest/inventory/
 2.  /API/rest/inventory/search/...
-3.  /API/rest/inventory/film/...
+3.  /API/rest/inventory/film/{ID}/{TITLE}
 1.  /API/rest/categories/
 1.  /API/rest/actors/
 
-In the inventory section, there are different URL query options that are divided by filter and pagination:
+In the inventory's search section, there are different URL query options that are divided by filter and pagination:
 
 #### filter
 
@@ -76,7 +71,7 @@ In the inventory section, there are different URL query options that are divided
 | spec | additional features | array(Trailers, Commentaries, Deleted Scenes, Behind the Scenes) |
 
 NOTE:
-The additional features can be separated by a "+" sign and the blanks are filled with "_"
+The additional features can be separated by a "+" sign and blanks are filled with "_"
 
 #### pagination
 
@@ -93,7 +88,7 @@ The main section is the inventory of film, so you can pretty much do what you wa
 
 ```
 to get all films:                           localhost/API/rest/inventory
-to get some films by filtering and paging:  localhost/API/rest/inventory/search/q=ace&price=2.99/page=2&ord=desc
+to get some films by filtering and paging:  localhost/API/rest/inventory/search/q=ace+gold&price=2.99/page=1&ord=desc
 to get the last five films added:           localhost/API/rest/inventory/search/q=/lim=5&orderby=id&ord=desc
 to get a specific film:                     localhost/API/rest/inventory/film/2/ace_goldfinger
 to get all categories:                      localhost/API/rest/categories
@@ -116,7 +111,7 @@ These status codes vary according to the http method requested and the response 
 | 201 | resources are created successfully. no response body returned |
 | 400 | Request data invalid or expressed without a valid JSON format |
 | 403 | data insertion denied |
-| 422 | Wrong input(s) |
+| 422 | at least 1 wrong input |
 | 500 | Database connection can't be done correctly |
 ### PUT
 | code | description |
@@ -124,7 +119,7 @@ These status codes vary according to the http method requested and the response 
 | 202 | updated successfully. no response body returned |
 | 400 | Request data invalid or expressed without a valid JSON format |
 | 404 | can't find the requested resource |
-| 422 | Wrong input(s) |
+| 422 | at least 1 wrong input |
 | 500 | Database connection can't be done correctly |
 ### DELETE
 | code | description |
